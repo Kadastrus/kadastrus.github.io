@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+    <title>Клавиатурный почерк</title>
+    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+    <script src="keystrokeDyn.js"></script>
+    <style>
+        body {
+            font-family: "Roboto",sans-serif;
+            font-size: 17px;
+            background-color: #777;
+        }
+        #page-container {
+            width: 700px;
+            padding: 30px 20px 30px 20px;
+            background-color: #fafafa;
+            border-radius: 20px;
+            margin: 40px auto;
+        }
+
+        #origin-text {
+            width: 550px;
+            background-color: #e5e5e5;
+            border: 1px silver solid;
+            border-radius: 10px;
+            margin: 15px auto;
+            font-family: "Courier New",Courier,monospace;
+            font-weight: bold;
+            font-size: 18px;
+            -webkit-touch-callout: none; /* iOS Safari */
+              -webkit-user-select: none; /* Safari */
+               -khtml-user-select: none; /* Konqueror HTML */
+                 -moz-user-select: none; /* Firefox */
+                  -ms-user-select: none; /* Internet Explorer/Edge */
+                      user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+        }
+        #origin-text p {
+            margin: 12px 10px;
+        }
+        #origin-text span {
+            /*padding-right: 1px;*/
+        }
+        #origin-text span.valid {
+            color: green;
+            /*background-color: green;*/
+            text-shadow: 0 0 2px rgba(0,255,0,.2);
+        }
+        #origin-text span.invalid {
+            color: black;
+            background-color: red;
+        }
+        #origin-text span.current {
+            background-color: silver;
+            text-decoration: underline;
+        }
+
+        #typing-text {
+            width: 530px;
+            height: 120px;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 18px;
+            margin: 15px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        #buttons {
+            padding-bottom: 15px;
+        }
+        #buttons button {
+            display: inline-block;
+            padding: 7px 16px;
+            border: 1px solid #fff;
+            margin: 0 4px 4px 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            /*font-family: 'Roboto',sans-serif;*/
+            text-align: center;
+            color: #eee;
+            background-color: #444;
+            transition: all .2s;
+            cursor: pointer;
+        }
+        #buttons button:hover {
+            color: #fff;
+            background-color: #222;
+        }
+
+        #results {
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @-ms-keyframes spin {
+            from { -ms-transform: rotate(0deg); }
+            to { -ms-transform: rotate(360deg); }
+        }
+        @-moz-keyframes spin {
+            from { -moz-transform: rotate(0deg); }
+            to { -moz-transform: rotate(360deg); }
+        }
+        @-webkit-keyframes spin {
+            from { -webkit-transform: rotate(0deg); }
+            to { -webkit-transform: rotate(360deg); }
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        #preloader {
+            display: block;
+            width: 20px;
+            height: 20px;
+            border: 5px solid #000;
+            border-right-color: transparent;
+            border-radius: 100%;
+
+            -webkit-animation: spin 600ms infinite linear;
+               -moz-animation: spin 600ms infinite linear;
+                -ms-animation: spin 600ms infinite linear;
+                    animation: spin 600ms infinite linear;
+        }
+    </style>
+</head>
+<body>
+    <div id="page-container">
+        <div>
+            Порядок проведения эксперимента по исследованию клавиатурного почерка:
+            <ol>
+                <li>в текстовом поле наберите указанный текст;</li>
+                <li>нажмите кнопку Далее;</li>
+                <li>в текстовом поле наберите появившийся текст;</li>
+                <li>нажмите кнопку Готово и сохраните файл;</li>
+                <li>отправьте сохраненный файл автору эксперимента.</li>
+            </ol>
+        </div>
+
+        <div>
+            Текст для набора:<br>
+            <div id="origin-text"></div>
+        </div>
+
+        <div>
+            Наберите указанный выше текст:<br>
+            <div id="typing-text-container">
+                <textarea id="typing-text" autofocus></textarea>
+            </div>
+        </div>
+
+        <div id="buttons">
+            <button id="reset-btn">Пройти заново</button>
+            <button id="next-btn">Далее</button>
+            <button id="run-btn" style="display:none">Готово</button>
+        </div>
+
+        <div id="results">
+            <div id="preloader" style="display:none"></div>
+            <div id="message" style="display:none"><b>Спасибо за участие!</b></div>
+        </div>
+    </div>
+</body>
+</html>
