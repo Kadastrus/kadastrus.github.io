@@ -8,8 +8,9 @@ var samples = [
 'Нет, - быстро сказал он. - Только не это. Остаться друзьями? Развести огородик на остывшей лаве угасших чувств? Нет, это не для нас с тобой. Так бывает только после маленьких интрижек, да и то получается довольно фальшиво. Любовь не пятнают дружбой. Конец есть конец.'
 ];
 
-var round = function(num) {
-    return Math.round(num * 10) / 10;
+var round = function(num, acc) {
+    var t = Math.pow(10, acc);
+    return Math.round(num * t) / t;
 };
 
 var keyHandler = function(e) {
@@ -40,13 +41,15 @@ var keyHandler = function(e) {
         if (debug) console.log(e.type + '\t' + e.keyCode + '  ' + e.timeStamp + '  ' + char);
         if (!allEvents[testNum]) {
             allEvents[testNum] = [];
-            startTs = round(e.timeStamp);
+            startTs = e.timeStamp;
         }
 
         allEvents[testNum].push({
             type: e.type,
             keyCode: e.keyCode,
-            timeStamp: round(e.timeStamp - startTs)
+            key: e.key,
+            code: e.originalEvent.code,
+            timeStamp: round(e.timeStamp - startTs, 4)
         });
     }
 };
